@@ -1,4 +1,4 @@
-import { useGenerator } from "../context";
+import { useGenerator } from "../../context";
 
 export const ImageUpload = () => {
 	const { setSelectedImage, generationType } = useGenerator();

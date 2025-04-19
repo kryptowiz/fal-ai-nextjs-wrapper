@@ -1,4 +1,4 @@
-import { useGenerator } from "../context";
+import { useGenerator } from "../../context";
 
 export const NumImagesSelector = () => {
 	const { numImages, setNumImages } = useGenerator();

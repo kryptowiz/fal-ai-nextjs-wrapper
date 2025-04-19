@@ -1,5 +1,5 @@
-import { useGenerator } from "../context";
-import { AspectRatio } from "../types";
+import { useGenerator } from "../../context";
+import { AspectRatio } from "../../types";
 
 const aspectRatios = [
 	{

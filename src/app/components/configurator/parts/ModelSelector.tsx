@@ -1,5 +1,5 @@
-import { useGenerator } from "../context";
-import { Model } from "../types";
+import { useGenerator } from "../../context";
+import { Model } from "../../types";
 
 const models = [
 	{

@@ -1,13 +1,13 @@
-import { GenerationTypeSelector } from "./GenerationTypeSelector";
-import { ImageUpload } from "./ImageUpload";
-import { AspectRatioSelector } from "./AspectRatioSelector";
-import { PromptInput } from "./PromptInput";
-import { ModelSelector } from "./ModelSelector";
-import { SeedInput } from "./SeedInput";
-import { GenerateButton } from "./GenerateButton";
-import { NumInterferenceSelector } from "./NumInterferenceSelector";
-import { CFGScale } from "./CFGScale";
-import { NumImagesSelector } from "./NumImagesSelector";
+import { GenerationTypeSelector } from "./parts/GenerationTypeSelector";
+import { ImageUpload } from "./parts/ImageUpload";
+import { AspectRatioSelector } from "./parts/AspectRatioSelector";
+import { PromptInput } from "./parts/PromptInput";
+import { ModelSelector } from "./parts/ModelSelector";
+import { SeedInput } from "./parts/SeedInput";
+import { GenerateButton } from "./parts/GenerateButton";
+import { NumInterferenceSelector } from "./parts/NumInterferenceSelector";
+import { CFGScale } from "./parts/CFGScale";
+import { NumImagesSelector } from "./parts/NumImagesSelector";
 
 export const ConfigurationPanel = () => {
 	return (

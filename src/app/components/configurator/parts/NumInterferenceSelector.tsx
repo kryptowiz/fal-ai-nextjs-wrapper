@@ -1,4 +1,4 @@
-import { useGenerator } from "../context";
+import { useGenerator } from "../../context";
 
 export const NumInterferenceSelector = () => {
 	const { numInferenceSteps, setNumInferenceSteps } = useGenerator();
