@@ -5,7 +5,7 @@ import {
 	ReactNode,
 	useEffect,
 } from "react";
-import { AspectRatio, GenerationType, Model } from "./types";
+import { AspectRatio, GenerationType, Model } from "../types";
 import { fal } from "@fal-ai/client";
 
 interface GeneratorContextType {
@@ -40,7 +40,7 @@ interface GeneratorContextType {
 	handleGenerate: () => void;
 
 	// Result
-	generatedImageUrl: string | null;
+	generatedImageUrls: string[];
 }
 
 // Create context with default values
@@ -60,9 +60,7 @@ export const GeneratorProvider = ({ children }: { children: ReactNode }) => {
 	const [aspectRatio, setAspectRatio] = useState<AspectRatio>("square");
 	const [seed, setSeed] = useState<number>(Math.floor(Math.random() * 1000000));
 	const [isGenerating, setIsGenerating] = useState(false);
-	const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(
-		null
-	);
+	const [generatedImageUrls, setGeneratedImageUrls] = useState<string[]>([]);
 
 	// Initialize fal client
 	useEffect(() => {
@@ -86,9 +84,6 @@ export const GeneratorProvider = ({ children }: { children: ReactNode }) => {
 				seed,
 			};
 
-			console.log(model);
-			console.log(payload);
-
 			// Call fal.ai
 			const result = await fal.subscribe(model, {
 				input: payload,
@@ -103,7 +98,10 @@ export const GeneratorProvider = ({ children }: { children: ReactNode }) => {
 
 			// Extract the image URL from the result
 			if (result.data.images && result.data.images[0]) {
-				setGeneratedImageUrl(result.data.images[0].url);
+				setGeneratedImageUrls((prevImageUrls) => [
+					...prevImageUrls,
+					result.data.images[0].url,
+				]);
 			}
 		} catch (error) {
 			console.error("Error generating image:", error);
@@ -136,7 +134,7 @@ export const GeneratorProvider = ({ children }: { children: ReactNode }) => {
 		// Generate function
 		handleGenerate,
 		// Result
-		generatedImageUrl,
+		generatedImageUrls,
 	};
 
 	return (
