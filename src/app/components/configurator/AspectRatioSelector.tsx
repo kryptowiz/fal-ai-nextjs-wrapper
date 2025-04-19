@@ -26,10 +26,25 @@ const aspectRatios = [
 		name: "16:9 (Landscape)",
 		value: "landscape_16_9",
 	},
+	{
+		name: "Custom",
+		value: "custom",
+	},
 ];
 
 export const AspectRatioSelector = () => {
-	const { aspectRatio, setAspectRatio } = useGenerator();
+	const {
+		aspectRatio,
+		setAspectRatio,
+		customWidth,
+		setCustomWidth,
+		customHeight,
+		setCustomHeight,
+	} = useGenerator();
+
+	const handleAspectRatioChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		setAspectRatio(e.target.value as AspectRatio);
+	};
 
 	return (
 		<div className="mb-4">
@@ -40,7 +55,7 @@ export const AspectRatioSelector = () => {
 				id="aspect-ratio"
 				className="w-full p-2 border rounded-md bg-white dark:bg-gray-700 dark:border-gray-600"
 				value={aspectRatio}
-				onChange={(e) => setAspectRatio(e.target.value as AspectRatio)}
+				onChange={handleAspectRatioChange}
 			>
 				{aspectRatios.map((ratio) => (
 					<option key={ratio.value} value={ratio.value}>
@@ -48,6 +63,33 @@ export const AspectRatioSelector = () => {
 					</option>
 				))}
 			</select>
+
+			{aspectRatio === "custom" && (
+				<div className="flex space-x-2 mt-2">
+					<input
+						type="number"
+						placeholder="Width"
+						className="w-1/2 p-2 border rounded-md bg-white dark:bg-gray-700 dark:border-gray-600"
+						value={customWidth}
+						onChange={(e) =>
+							setCustomWidth(
+								e.target.value === "" ? 0 : parseInt(e.target.value)
+							)
+						}
+					/>
+					<input
+						type="number"
+						placeholder="Height"
+						className="w-1/2 p-2 border rounded-md bg-white dark:bg-gray-700 dark:border-gray-600"
+						value={customHeight}
+						onChange={(e) =>
+							setCustomHeight(
+								e.target.value === "" ? 0 : parseInt(e.target.value)
+							)
+						}
+					/>
+				</div>
+			)}
 		</div>
 	);
 };

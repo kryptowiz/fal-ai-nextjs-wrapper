@@ -29,9 +29,35 @@ interface GeneratorContextType {
 	aspectRatio: AspectRatio;
 	setAspectRatio: (ratio: AspectRatio) => void;
 
+	// Custom width
+	customWidth: number;
+	setCustomWidth: (width: number) => void;
+
+	// Custom height
+	customHeight: number;
+	setCustomHeight: (height: number) => void;
+
 	// Seed
-	seed: number;
-	setSeed: (seed: number) => void;
+	seed: number | null;
+	setSeed: (seed: number | null) => void;
+
+	// Number of inference steps
+	numInferenceSteps: number;
+
+	// Set number of inference steps
+	setNumInferenceSteps: (steps: number) => void;
+
+	// Guidance scale
+	guidanceScale: number;
+
+	// Set guidance scale
+	setGuidanceScale: (scale: number) => void;
+
+	// Number of images
+	numImages: number;
+
+	// Set number of images
+	setNumImages: (num: number) => void;
 
 	// Generation state
 	isGenerating: boolean;
@@ -58,9 +84,14 @@ export const GeneratorProvider = ({ children }: { children: ReactNode }) => {
 	const [selectedImage, setSelectedImage] = useState<File | null>(null);
 	const [model, setModel] = useState<Model>("fal-ai/flux/dev");
 	const [aspectRatio, setAspectRatio] = useState<AspectRatio>("square");
-	const [seed, setSeed] = useState<number>(Math.floor(Math.random() * 1000000));
+	const [seed, setSeed] = useState<number | null>(null);
+	const [numInferenceSteps, setNumInferenceSteps] = useState<number>(28);
+	const [guidanceScale, setGuidanceScale] = useState<number>(3.5);
+	const [numImages, setNumImages] = useState<number>(1);
 	const [isGenerating, setIsGenerating] = useState(false);
 	const [generatedImageUrls, setGeneratedImageUrls] = useState<string[]>([]);
+	const [customWidth, setCustomWidth] = useState<number>(1024);
+	const [customHeight, setCustomHeight] = useState<number>(1024);
 
 	// Initialize fal client
 	useEffect(() => {
@@ -74,12 +105,31 @@ export const GeneratorProvider = ({ children }: { children: ReactNode }) => {
 		setIsGenerating(true);
 		try {
 			// Create payload
+			let imageSize;
+			if (aspectRatio === "custom") {
+				if (
+					customWidth &&
+					customHeight &&
+					customWidth > 100 &&
+					customHeight > 100
+				) {
+					imageSize = { width: customWidth, height: customHeight };
+				} else {
+					console.warn(
+						"Custom width and height must be greater than 100. Using default square aspect ratio."
+					);
+					imageSize = "square";
+				}
+			} else {
+				imageSize = aspectRatio;
+			}
+
 			const payload = {
 				prompt,
-				image_size: aspectRatio,
-				num_interference_steps: 28,
-				guidance_scale: 3.5,
-				num_images: 1,
+				image_size: imageSize,
+				num_interference_steps: numInferenceSteps,
+				guidance_scale: guidanceScale,
+				num_images: numImages,
 				enable_safety_checker: false,
 				seed,
 			};
@@ -94,13 +144,14 @@ export const GeneratorProvider = ({ children }: { children: ReactNode }) => {
 				},
 			});
 
-			console.log("Result:", result);
-
 			// Extract the image URL from the result
-			if (result.data.images && result.data.images[0]) {
+			if (result.data.images && result.data.images.length > 0) {
+				const newImageUrls = result.data.images.map(
+					(image: { url: string }) => image.url
+				);
 				setGeneratedImageUrls((prevImageUrls) => [
 					...prevImageUrls,
-					result.data.images[0].url,
+					...newImageUrls,
 				]);
 			}
 		} catch (error) {
@@ -126,9 +177,24 @@ export const GeneratorProvider = ({ children }: { children: ReactNode }) => {
 		// Aspect ratio
 		aspectRatio,
 		setAspectRatio,
+		// Custom width
+		customWidth,
+		setCustomWidth,
+		// Custom height
+		customHeight,
+		setCustomHeight,
 		// Seed
 		seed,
 		setSeed,
+		// Number of inference steps
+		numInferenceSteps,
+		setNumInferenceSteps,
+		// Guidance scale
+		guidanceScale,
+		setGuidanceScale,
+		// Number of images
+		numImages,
+		setNumImages,
 		// Generation state
 		isGenerating,
 		// Generate function

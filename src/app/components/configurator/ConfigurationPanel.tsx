@@ -5,6 +5,9 @@ import { PromptInput } from "./PromptInput";
 import { ModelSelector } from "./ModelSelector";
 import { SeedInput } from "./SeedInput";
 import { GenerateButton } from "./GenerateButton";
+import { NumInterferenceSelector } from "./NumInterferenceSelector";
+import { CFGScale } from "./CFGScale";
+import { NumImagesSelector } from "./NumImagesSelector";
 
 export const ConfigurationPanel = () => {
 	return (
@@ -16,6 +19,9 @@ export const ConfigurationPanel = () => {
 			<ModelSelector />
 			<AspectRatioSelector />
 			<SeedInput />
+			<NumInterferenceSelector />
+			<CFGScale />
+			<NumImagesSelector />
 			<GenerateButton />
 		</div>
 	);

@@ -4,7 +4,8 @@ export type AspectRatio =
 	| "portrait_4_3"
 	| "portrait_9_16"
 	| "landscape_4_3"
-	| "landscape_16_9";
+	| "landscape_16_9"
+	| "custom";
 
 export type GenerationType = "text-to-image" | "image-to-video";
 
