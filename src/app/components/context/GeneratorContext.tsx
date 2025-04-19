@@ -8,9 +8,7 @@ import {
 import { AspectRatio, GenerationType, Model } from "./types";
 import { fal } from "@fal-ai/client";
 
-// Define types
-
-interface ConfigurationContextType {
+interface GeneratorContextType {
 	// Generation type
 	generationType: GenerationType;
 	setGenerationType: (type: GenerationType) => void;
@@ -46,18 +44,13 @@ interface ConfigurationContextType {
 }
 
 // Create context with default values
-const ConfigurationContext = createContext<
-	ConfigurationContextType | undefined
->(undefined);
+const GeneratorContext = createContext<GeneratorContextType | undefined>(
+	undefined
+);
 
 const examplePrompt = "Cute cat";
 
-// Provider component
-export const ConfigurationProvider = ({
-	children,
-}: {
-	children: ReactNode;
-}) => {
+export const GeneratorProvider = ({ children }: { children: ReactNode }) => {
 	// States for all configuration options
 	const [generationType, setGenerationType] =
 		useState<GenerationType>("text-to-image");
@@ -147,19 +140,17 @@ export const ConfigurationProvider = ({
 	};
 
 	return (
-		<ConfigurationContext.Provider value={value}>
+		<GeneratorContext.Provider value={value}>
 			{children}
-		</ConfigurationContext.Provider>
+		</GeneratorContext.Provider>
 	);
 };
 
 // Custom hook for using the context
-export const useConfiguration = () => {
-	const context = useContext(ConfigurationContext);
+export const useGenerator = () => {
+	const context = useContext(GeneratorContext);
 	if (context === undefined) {
-		throw new Error(
-			"useConfiguration must be used within a ConfigurationProvider"
-		);
+		throw new Error("useGenerator must be used within a GeneratorProvider");
 	}
 	return context;
 };

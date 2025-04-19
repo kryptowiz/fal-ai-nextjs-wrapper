@@ -1,5 +1,5 @@
-import { useConfiguration } from "./ConfigurationContext";
-import { AspectRatio } from "./types";
+import { useGenerator } from "../context";
+import { AspectRatio } from "../types";
 
 const aspectRatios = [
 	{
@@ -29,7 +29,7 @@ const aspectRatios = [
 ];
 
 export const AspectRatioSelector = () => {
-	const { aspectRatio, setAspectRatio } = useConfiguration();
+	const { aspectRatio, setAspectRatio } = useGenerator();
 
 	return (
 		<div className="mb-4">

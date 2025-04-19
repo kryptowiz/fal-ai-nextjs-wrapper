@@ -1,7 +1,7 @@
-import { useConfiguration } from "./ConfigurationContext";
+import { useGenerator } from "../context";
 
 export const PromptInput = () => {
-	const { prompt, setPrompt } = useConfiguration();
+	const { prompt, setPrompt } = useGenerator();
 
 	return (
 		<div className="mb-4">

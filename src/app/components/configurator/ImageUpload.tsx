@@ -1,7 +1,7 @@
-import { useConfiguration } from "./ConfigurationContext";
+import { useGenerator } from "../context";
 
 export const ImageUpload = () => {
-	const { setSelectedImage, generationType } = useConfiguration();
+	const { setSelectedImage, generationType } = useGenerator();
 
 	if (generationType !== "image-to-video") {
 		return null;

@@ -1,7 +1,7 @@
-import { useConfiguration } from "./ConfigurationContext";
+import { useGenerator } from "../context";
 
 export const SeedInput = () => {
-	const { seed, setSeed } = useConfiguration();
+	const { seed, setSeed } = useGenerator();
 
 	return (
 		<div className="mb-4">

@@ -1,7 +1,7 @@
-import { useConfiguration } from "./configurator/ConfigurationContext";
+import { useGenerator } from "../context";
 
 export const ResultsDisplay = () => {
-	const { generatedImageUrl, isGenerating } = useConfiguration();
+	const { generatedImageUrl, isGenerating } = useGenerator();
 
 	return (
 		<div className="w-full md:w-1/2 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg shadow">

@@ -1,5 +1,5 @@
-import { useConfiguration } from "./ConfigurationContext";
-import { Model } from "./types";
+import { useGenerator } from "../context";
+import { Model } from "../types";
 
 const models = [
 	{
@@ -17,7 +17,7 @@ const models = [
 ];
 
 export const ModelSelector = () => {
-	const { model, setModel } = useConfiguration();
+	const { model, setModel } = useGenerator();
 
 	return (
 		<div className="mb-4">

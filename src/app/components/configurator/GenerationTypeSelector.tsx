@@ -1,10 +1,9 @@
 import { Video } from "lucide-react";
-
 import { ImageIcon } from "lucide-react";
-import { useConfiguration } from "./ConfigurationContext";
+import { useGenerator } from "../context";
 
 export const GenerationTypeSelector = () => {
-	const { generationType, setGenerationType } = useConfiguration();
+	const { generationType, setGenerationType } = useGenerator();
 
 	return (
 		<div className="mb-4">

@@ -1,7 +1,7 @@
-import { useConfiguration } from "./ConfigurationContext";
+import { useGenerator } from "../context";
 
 export const GenerateButton = () => {
-	const { handleGenerate, isGenerating } = useConfiguration();
+	const { handleGenerate, isGenerating } = useGenerator();
 
 	return (
 		<button
