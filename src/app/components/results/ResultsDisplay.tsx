@@ -1,34 +1,59 @@
 import { useGenerator } from "../context";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const ResultsDisplay = () => {
-	const { generatedImageUrls, isGenerating } = useGenerator();
+	const { generatedImageUrls, isGenerating, numImages, aspectRatio } =
+		useGenerator();
+
+	const calculateAspectRatioClass = () => {
+		switch (aspectRatio) {
+			case "square":
+			case "square_hd":
+				return "aspect-square";
+			case "portrait_4_3":
+				return "aspect-[3/4]";
+			case "portrait_9_16":
+				return "aspect-[9/16]";
+			case "landscape_4_3":
+				return "aspect-[4/3]";
+			case "landscape_16_9":
+				return "aspect-[16/9]";
+			default:
+				// Default to square if custom or unknown
+				return "aspect-square";
+		}
+	};
+
+	const aspectRatioClass = calculateAspectRatioClass();
+
+	const numberOfSkeletons = isGenerating ? numImages : 0;
 
 	return (
-		<div className="w-full md:w-1/2 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg shadow">
-			<h2 className="text-xl font-bold mb-4">Results</h2>
-
-			<div className="flex flex-col items-center justify-center min-h-[400px] bg-gray-200 dark:bg-gray-700 rounded-lg">
-				{generatedImageUrls.length > 0 && (
-					<div className="grid grid-cols-2 gap-4">
-						{generatedImageUrls.map((url, index) => (
-							<img
-								key={index}
-								src={url}
-								alt={`Generated image ${index + 1}`}
-								className="max-w-full max-h-[300px] rounded-lg object-cover"
+		<div className="w-full md:w-1/2 p-4 space-y-4">
+			<h2 className="text-xl font-bold">Results</h2>
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+				{/* Skeletons during generation */}
+				{isGenerating &&
+					[...Array(numberOfSkeletons)]
+						.map((_, i) => (
+							<Skeleton
+								key={`skeleton-${i}`}
+								className={`rounded-lg w-full ${aspectRatioClass}`}
 							/>
-						))}
-					</div>
-				)}
+						))
+						.reverse()}
 
-				{isGenerating ? (
-					<div className="text-center mt-4">
-						<p className="mb-2">Generating image...</p>
-						<div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
-					</div>
-				) : generatedImageUrls.length === 0 ? (
-					<p className="text-gray-500">Generated image will appear here</p>
-				) : null}
+				{/* Existing Images */}
+				{generatedImageUrls
+					.map((url, index) => (
+						<img
+							key={index}
+							src={url}
+							alt={`Generated image ${index + 1}`}
+							className="w-full rounded-lg object-cover"
+						/>
+					))
+					.reverse()}
 			</div>
 		</div>
 	);

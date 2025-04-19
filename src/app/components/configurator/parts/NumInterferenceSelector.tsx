@@ -1,28 +1,31 @@
 import { useGenerator } from "../../context";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
 
 export const NumInterferenceSelector = () => {
 	const { numInferenceSteps, setNumInferenceSteps } = useGenerator();
 
-	const handleNumInferenceStepsChange = (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
-		setNumInferenceSteps(parseInt(e.target.value));
+	const handleNumInferenceStepsChange = (value: number[]) => {
+		setNumInferenceSteps(value[0]);
 	};
 
 	return (
-		<div className="mb-4">
-			<label htmlFor="num-inference-steps" className="block mb-2 font-medium">
-				Number of Inference Steps
-			</label>
-			<input
-				type="number"
+		<div>
+			<div className="flex items-center justify-between">
+				<Label htmlFor="num-inference-steps" className="block mb-4 font-medium">
+					Number of Inference Steps
+				</Label>
+				<Label htmlFor="num-inference-steps" className="block mb-4 font-medium">
+					{numInferenceSteps}
+				</Label>
+			</div>
+			<Slider
 				id="num-inference-steps"
-				className="w-full p-2 border rounded-md bg-white dark:bg-gray-700 dark:border-gray-600"
-				value={numInferenceSteps}
-				onChange={handleNumInferenceStepsChange}
-				min="1"
-				max="150"
-				step="1"
+				defaultValue={[numInferenceSteps]}
+				onValueChange={handleNumInferenceStepsChange}
+				min={1}
+				max={150}
+				step={1}
 			/>
 		</div>
 	);

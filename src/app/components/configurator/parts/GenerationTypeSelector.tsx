@@ -9,7 +9,7 @@ export const GenerationTypeSelector = () => {
 	return null;
 
 	return (
-		<div className="mb-4">
+		<div>
 			<label className="block mb-2 font-medium">Generation Type</label>
 			<div className="flex gap-2">
 				<button

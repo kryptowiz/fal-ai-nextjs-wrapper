@@ -8,7 +8,7 @@ export const ImageUpload = () => {
 	}
 
 	return (
-		<div className="mb-4">
+		<div>
 			<label className="block mb-2 font-medium">Upload Image</label>
 			<input
 				type="file"

@@ -1,5 +1,13 @@
 import { useGenerator } from "../../context";
 import { Model } from "../../types";
+import { Label } from "@/components/ui/label";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 
 const models = [
 	{
@@ -20,22 +28,22 @@ export const ModelSelector = () => {
 	const { model, setModel } = useGenerator();
 
 	return (
-		<div className="mb-4">
-			<label htmlFor="model" className="block mb-2 font-medium">
+		<div>
+			<Label htmlFor="model" className="block mb-4 font-medium">
 				Model
-			</label>
-			<select
-				id="model"
-				className="w-full p-2 border rounded-md bg-white dark:bg-gray-700 dark:border-gray-600"
-				value={model}
-				onChange={(e) => setModel(e.target.value as Model)}
-			>
-				{models.map((model) => (
-					<option key={model.value} value={model.value}>
-						{model.name}
-					</option>
-				))}
-			</select>
+			</Label>
+			<Select value={model} onValueChange={(value) => setModel(value as Model)}>
+				<SelectTrigger className="w-full">
+					<SelectValue placeholder="Select a model" />
+				</SelectTrigger>
+				<SelectContent>
+					{models.map((model) => (
+						<SelectItem key={model.value} value={model.value}>
+							{model.name}
+						</SelectItem>
+					))}
+				</SelectContent>
+			</Select>
 		</div>
 	);
 };

@@ -1,29 +1,31 @@
 import { useGenerator } from "../../context";
+import { Label } from "@/components/ui/label";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 export const NumImagesSelector = () => {
 	const { numImages, setNumImages } = useGenerator();
 
-	const handleNumImagesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setNumImages(parseInt(e.target.value));
+	const handleNumImagesChange = (value: string) => {
+		setNumImages(parseInt(value));
 	};
 
 	return (
-		<div className="mb-4">
-			<label htmlFor="num-images" className="block mb-2 font-medium">
+		<div>
+			<Label htmlFor="num-images" className="block mb-4 font-medium">
 				Number of Images
-			</label>
-			<select
-				id="num-images"
-				className="w-full p-2 border rounded-md bg-white dark:bg-gray-700 dark:border-gray-600"
-				value={numImages}
-				onChange={handleNumImagesChange}
+			</Label>
+			<ToggleGroup
+				defaultValue={numImages.toString()}
+				type="single"
+				onValueChange={handleNumImagesChange}
+				size="lg"
 			>
 				{[1, 2, 3, 4].map((num) => (
-					<option key={num} value={num}>
+					<ToggleGroupItem size="lg" key={num} value={num.toString()}>
 						{num}
-					</option>
+					</ToggleGroupItem>
 				))}
-			</select>
+			</ToggleGroup>
 		</div>
 	);
 };

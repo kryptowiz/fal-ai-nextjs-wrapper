@@ -1,5 +1,14 @@
 import { useGenerator } from "../../context";
 import { AspectRatio } from "../../types";
+import { Label } from "@/components/ui/label";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 const aspectRatios = [
 	{
@@ -42,52 +51,63 @@ export const AspectRatioSelector = () => {
 		setCustomHeight,
 	} = useGenerator();
 
-	const handleAspectRatioChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setAspectRatio(e.target.value as AspectRatio);
-	};
-
 	return (
-		<div className="mb-4">
-			<label htmlFor="aspect-ratio" className="block mb-2 font-medium">
+		<div>
+			<Label htmlFor="aspect-ratio" className="block mb-4 font-medium">
 				Aspect Ratio
-			</label>
-			<select
-				id="aspect-ratio"
-				className="w-full p-2 border rounded-md bg-white dark:bg-gray-700 dark:border-gray-600"
+			</Label>
+			<Select
 				value={aspectRatio}
-				onChange={handleAspectRatioChange}
+				onValueChange={(value) => setAspectRatio(value as AspectRatio)}
 			>
-				{aspectRatios.map((ratio) => (
-					<option key={ratio.value} value={ratio.value}>
-						{ratio.name}
-					</option>
-				))}
-			</select>
+				<SelectTrigger className="w-full">
+					<SelectValue placeholder="Select an aspect ratio" />
+				</SelectTrigger>
+				<SelectContent>
+					{aspectRatios.map((ratio) => (
+						<SelectItem key={ratio.value} value={ratio.value}>
+							{ratio.name}
+						</SelectItem>
+					))}
+				</SelectContent>
+			</Select>
 
 			{aspectRatio === "custom" && (
-				<div className="flex space-x-2 mt-2">
-					<input
-						type="number"
-						placeholder="Width"
-						className="w-1/2 p-2 border rounded-md bg-white dark:bg-gray-700 dark:border-gray-600"
-						value={customWidth}
-						onChange={(e) =>
-							setCustomWidth(
-								e.target.value === "" ? 0 : parseInt(e.target.value)
-							)
-						}
-					/>
-					<input
-						type="number"
-						placeholder="Height"
-						className="w-1/2 p-2 border rounded-md bg-white dark:bg-gray-700 dark:border-gray-600"
-						value={customHeight}
-						onChange={(e) =>
-							setCustomHeight(
-								e.target.value === "" ? 0 : parseInt(e.target.value)
-							)
-						}
-					/>
+				<div className="flex items-center space-x-2 mt-4">
+					<div className="flex flex-col w-full">
+						<Label htmlFor="custom-width" className="mb-2">
+							Width
+						</Label>
+						<Input
+							type="number"
+							id="custom-width"
+							placeholder="Width"
+							className="w-full"
+							value={customWidth}
+							onChange={(e) =>
+								setCustomWidth(
+									e.target.value === "" ? 0 : parseInt(e.target.value)
+								)
+							}
+						/>
+					</div>
+					<div className="flex flex-col w-full">
+						<Label htmlFor="custom-height" className="mb-2">
+							Height
+						</Label>
+						<Input
+							type="number"
+							id="custom-height"
+							placeholder="Height"
+							className="w-full"
+							value={customHeight}
+							onChange={(e) =>
+								setCustomHeight(
+									e.target.value === "" ? 0 : parseInt(e.target.value)
+								)
+							}
+						/>
+					</div>
 				</div>
 			)}
 		</div>
