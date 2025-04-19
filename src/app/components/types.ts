@@ -2,7 +2,7 @@ export type AspectRatio =
 	| "square"
 	| "square_hd"
 	| "portrait_4_3"
-	| "portrait_9_16"
+	| "portrait_16_9"
 	| "landscape_4_3"
 	| "landscape_16_9"
 	| "custom";

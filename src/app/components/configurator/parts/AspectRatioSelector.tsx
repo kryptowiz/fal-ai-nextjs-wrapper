@@ -25,7 +25,7 @@ const aspectRatios = [
 	},
 	{
 		name: "9:16 (Portrait)",
-		value: "portrait_9_16",
+		value: "portrait_16_9",
 	},
 	{
 		name: "4:3 (Landscape)",
